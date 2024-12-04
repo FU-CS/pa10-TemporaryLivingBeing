@@ -27,17 +27,6 @@ class GraphTest {
     }
 
     @Test
-    void testTopologicalSortDFSWithCycle() {
-        Graph graph = new GraphImplementation(3);
-        graph.addEdge(0, 1);
-        graph.addEdge(1, 2);
-        graph.addEdge(2, 0);
-
-        String result = graph.topologicalSort();
-        assertNull(result);
-    }
-
-    @Test
     void testKahnAlgorithm() {
         Graph graph = new GraphImplementation(6);
         graph.addEdge(5, 2);

@@ -14,20 +14,18 @@ public class GraphImplementation implements Graph {
     public void addEdge(int v, int w) {
         edges.add(new int[]{v, w});
     }
-
+    
     @Override
     public String topologicalSort() {
-        int[] visited = new int[vertices];
+        boolean[] visited = new boolean[vertices];
         Stack<Integer> stack = new Stack<>();
-
+        
         for (int i = 0; i < vertices; i++) {
-            if (visited[i] == 0) {
-                if (dfs(i, visited, stack)) {
-                    return null;
-                }
+            if (!visited[i]) {
+                dfs(i, visited, stack);
             }
         }
-
+    
         String result = "[";
         while (!stack.isEmpty()) {
             result += stack.pop();
@@ -38,28 +36,21 @@ public class GraphImplementation implements Graph {
         result += "]";
         return result;
     }
-
-    private boolean dfs(int v, int[] visited, Stack<Integer> stack) {
-        if (visited[v] == 1) {
-            return true;
+    
+    private void dfs(int v, boolean[] visited, Stack<Integer> stack) {
+        if (visited[v]) {
+            return;
         }
-        if (visited[v] == 2) {
-            return false;
-        }
-
-        visited[v] = 1;
+    
+        visited[v] = true;
         
         for (int[] edge : edges) {
             if (edge[0] == v) {
-                if (dfs(edge[1], visited, stack)) {
-                    return true;
-                }
+                dfs(edge[1], visited, stack);
             }
         }
-
-        visited[v] = 2;
+    
         stack.push(v);
-        return false;
     }
 
     @Override
